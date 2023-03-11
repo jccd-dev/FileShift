@@ -1,0 +1,30 @@
+{
+  "name": "fileTransfer",
+  "version": "v1",
+  "description": "to easyly copy directories with filter functions",
+  "main": "app.js",
+  "author": "jccd",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "tsnd src/app.ts --respawn --transpile-only --exit-child",
+    "build": "tsc",
+    "start": "node dist/app.js"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "@types/fs-extra": "^11.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^11.1.0",
+    "http": "^0.0.1-security",
+    "path": "^0.12.7",
+    "socket.io": "^4.6.1"
+  }
+}
