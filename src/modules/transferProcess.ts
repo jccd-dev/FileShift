@@ -28,7 +28,7 @@ export const copyFiles = (data: Inputs) => {
             overwrite: false,
             errorOnExist: true,
             filter: (src: string, dest: string) => {
-                const isCopy = !foldertoExclude.some((foldertoExclude) => src.includes(foldertoExclude))
+                const isCopy = !foldertoExclude.some((foldertoExclude: string) => src.includes(foldertoExclude))
 
                 if(isCopy) fileCopiedEvent.emit('fileCopied', path.basename(src))
                 return isCopy
@@ -59,4 +59,34 @@ export const convertToStringArray = (excludeFiles: string): string[] => {
     const excludedFilesArray = excludeFilesTrimmed.split(",");
     
     return excludedFilesArray
+}
+
+/**
+ * @description: count and return all files in the provided directory 
+ *               besides the excluded files 
+ * @param {string }sourceDir 
+ * @param {string} excludedFiles 
+ * @returns {number} totalFiles : total number of files inside the directory
+ */
+export const countAllFiles = (sourceDir: string, excludedFiles: string[]): number => {
+    let totalFiles: number = 0
+    const files = fs.readdirSync(sourceDir);
+    files.forEach((file) => {
+        const filepath = path.join(sourceDir, file);
+        if (fs.statSync(filepath).isDirectory()) {
+
+            // check if the directory should be excluded
+            //then increment the totalfile if it is a folder
+            if (!excludedFiles.includes(file)) {
+                totalFiles++
+                totalFiles += countAllFiles(filepath, excludedFiles);
+            }
+        } else {
+            if (!excludedFiles.some((excludedFile: string) => filepath.includes(excludedFile))) {
+                totalFiles++
+            }
+        }
+    });
+
+    return totalFiles
 }

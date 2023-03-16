@@ -1,0 +1,104 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    background-color: aliceblue;
+    align-items: center;
+    height: 100vh;
+}
+
+.main h3 {
+    font-size: 2rem;
+    color: #000000;
+    text-transform: uppercase;
+}
+
+.content {
+    background-color: aqua;
+    width: 500px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.forms {
+    width: 100%; 
+}
+form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.inputs {
+    width: 90%;
+    height: auto;
+    margin: 20px 10px 20px 10px;
+}
+
+.inputs input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+button {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #000000;
+    color: wheat;
+    font-size: 15px;
+    border: none;
+    width: 150px;
+    cursor: pointer;
+}
+
+#progress-bar {
+    width: 0;
+    height: 20px;
+    background-color: #f1f1f1;
+  }
+  
+  #progress-bar::after {
+    content: "";
+    display: block;
+    height: 100%;
+    background-color: #4CAF50;
+    width: 0%;
+    transition: width 0.5s ease-in-out;
+  }
+  
+  #progress-bar::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0%;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #f1f1f1;
+    left: 0;
+  }
+
+/* .d-none {
+    display: none;
+} */
+  
+

@@ -1,12 +1,17 @@
+import { countAllFiles } from './../modules/transferProcess';
 import { Inputs } from './../interfaces/DirInputs';
 import { Request, Response, Application } from "express"
 import { copyFiles, convertToStringArray } from "../modules/transferProcess"
-import { EventEmitter } from 'events';
 
 export const home = (req: Request, res: Response) => {
     res.render('home')
 }
 
+/**
+ * @description receive and process the request of the user 
+ * @param req 
+ * @param res 
+ */
 export const copyData = (req: Request, res: Response) => {
 
     const inputs: Inputs = {
@@ -16,21 +21,30 @@ export const copyData = (req: Request, res: Response) => {
     }
     
     let filesCopied = 0
+    const totalFiles = countAllFiles(inputs.sourceDir, inputs.excludedFiles) + 1
+    
     try {
         const copyFileEvent = copyFiles(inputs)
 
         copyFileEvent.on('fileCopied', (fileName: string) => {
-            console.log(`File ${fileName} has been copied`);
+            console.log(`${fileName}`);
             filesCopied++
-            const progress:number = Math.round((filesCopied / 100) * 100);
+            // calculate the folders and files that already been copied, then return it by percent
+            // then add into event emmiter to pass the data
+            const progress:number = Math.round((filesCopied / totalFiles) * 100);
             if (req.app.get('io')) {
-                req.app.get('io').emit('progress', progress);
+                req.app.get('io').emit('progress', {filesCopied, totalFiles, progress});
             }
-            console.log(progress)
+           
         })
 
+        //indicate the process of copying in EventEmmiter is done or end
         copyFileEvent.on('end', () => {
-            res.send('Directory copied successfully');
+            res.json({
+                message: "Successfuly Copied all Files",
+                success: true
+            });
+            console.log(filesCopied)
             res.end();
         })
     } catch (error) {
