@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "dev": "tsnd src/app.ts --respawn --transpile-only --exit-child",
-    "build": "tsc && cp -R src/public/ dist/public/",
+    "build": "tsc",
     "start": "node dist/app.js"
   },
   "devDependencies": {
