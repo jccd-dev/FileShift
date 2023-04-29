@@ -1,0 +1,17 @@
+root/
+|- public/
+|   └─ css/
+|
+|- src/
+|   |- controller/
+|   |- interfaces/
+|   |- modules/
+|   |- routes/
+|   └─ views/
+|
+|- app.ts
+|- copyViews.ts
+|- package.json
+|- tsconfig.json
+|- yarn.lock
+

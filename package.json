@@ -1,5 +1,5 @@
 {
-  "name": "fileTransfer",
+  "name": "File shift",
   "version": "v1",
   "description": "to easyly copy directories with filter functions",
   "main": "app.js",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "tsnd src/app.ts --respawn --transpile-only --exit-child",
+    "dev": "tsnd app.ts --respawn --transpile-only --exit-child",
     "build": "tsc",
     "start": "node dist/app.js"
   },
