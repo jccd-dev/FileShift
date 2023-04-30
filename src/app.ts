@@ -2,9 +2,12 @@ import express, {Response, Request} from 'express'
 import path from 'path'
 import http from 'http'
 import { Server } from 'socket.io'
-import appRouter from './src/routes/appRoutes'
+import appRouter from './routes/appRoutes'
+import dotenv from 'dotenv'
 
-const port = process.env.PORT || 5000
+dotenv.config()
+
+const port = process.env.PORT || 3000
 const app = express();
 const server = http.createServer(app)
 const io = new Server(server)
@@ -12,9 +15,16 @@ app.set('io', io);
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-app.set('views', path.join(__dirname, './src/views'))
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
-app.use(express.static(path.join(__dirname, 'public')))
+
+if (process.env.NODE_ENV === 'development'){
+    app.use(express.static(path.join(__dirname, '../public')))
+}
+else{
+    app.use(express.static(path.join(__dirname, 'public')))
+}
+
 
 app.use('/', appRouter)
 

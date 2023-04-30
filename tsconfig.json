@@ -17,7 +17,7 @@
   "include": [
     "src/**/*.ts",
     "views/**/*.ejs"
-, "app.ts"  ],
+, "src/app.ts"  ],
   "exclude": [
     "node_modules"
   ]
