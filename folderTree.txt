@@ -7,9 +7,9 @@ root/
 |   |- interfaces/
 |   |- modules/
 |   |- routes/
-|   └─ views/
+|   |- views/
+|   └─ app.ts
 |
-|- app.ts
 |- copyViews.ts
 |- package.json
 |- tsconfig.json
