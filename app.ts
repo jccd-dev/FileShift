@@ -4,6 +4,7 @@ import http from 'http'
 import { Server } from 'socket.io'
 import appRouter from './src/routes/appRoutes'
 
+const port = process.env.PORT || 5000
 const app = express();
 const server = http.createServer(app)
 const io = new Server(server)
@@ -18,6 +19,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', appRouter)
 
 
-server.listen(3000, () => {
+server.listen(port, () => {
     console.log('Listening on port 3000');
 })

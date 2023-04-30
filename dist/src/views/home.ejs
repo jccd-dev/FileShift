@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>CopyMe</title>
+</head>
+<body>
+    <section class="main">
+        <div class="content">
+            <div class="title">
+                <h3 class="app_title">FileShift</h3>
+            </div>
+            <div class="progress">
+                <div class="load">
+                    <div id="progress-label"></div>
+                    <div id="progress-bar"></div>
+                </div>
+            </div>
+            <div class="forms">
+                <form id="form-submit" method="post">
+                    <div class="inputs">
+                        <label for="source">Source Directory</label>
+                        <input type="text" name="source" id="source">
+                    </div>
+                    <div class="inputs">
+                        <label for="dest">Destination Directory</label>
+                        <input type="text" name="dest" id="dest">
+                    </div>
+                    <div class="inputs">
+                        <label for="excluded">Excluded Directory</label>
+                        <input type="text" name="excluded" id="excluded">
+                    </div>
+
+                    <div class="submit">
+                        <button type="submit" id="copy">RUN COPY</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    const socket = io();
+
+    const progressBar = document.getElementById('progress-bar');
+    const progressLabel = document.getElementById('progress-label');
+
+    socket.on('progress', ({filesCopied, totalFiles, progress}) => {
+       
+        progressBar.classList.remove('d-none')
+        progressBar.style.width = `${progress}%`;
+        progressLabel.innerText = `${filesCopied} of ${totalFiles} - (${progress}%)`;
+    });
+
+
+    $('#form-submit').submit(function (e) { 
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/copy-dir",
+            data: $(this).serialize(),
+            dataType: "json",
+            success: function (response) {
+                console.log(response)
+                setTimeout(()=>{
+                    if (response.success) {
+                        //reset the progress bar
+                        progressBar.style.width = 0;
+                        progressLabel.innerText = '';
+                        //reset the form inputs
+                        $("#form-submit")[0].reset() 
+                    }   
+                }, 3000)
+
+               
+            }
+        });
+    });
+    </script>
+
+</body>
+</html>
